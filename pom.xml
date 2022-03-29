@@ -11,8 +11,9 @@
     <description>Sample project to test out rabbitmq integration with spring boot</description>
 
     <modules>
-        <module>gateway</module>
         <module>common</module>
+        <module>gateway</module>
+        <module>processor</module>
     </modules>
 
 </project>
