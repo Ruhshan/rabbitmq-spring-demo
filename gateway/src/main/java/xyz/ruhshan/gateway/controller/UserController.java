@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/user")
     public ApiResponse createUser(@RequestBody UserRegistrationRequest request) {
-        rabbitTemplate.convertAndSend("", "user-registration", request);
+        rabbitTemplate.convertAndSend("", "q.user-registration", request);
         return new ApiResponse("Ok");
     }
 }
