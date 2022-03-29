@@ -1,4 +1,4 @@
-package xyz.ruhshan.common.dto;
+package xyz.ruhshan.common.reqres;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
