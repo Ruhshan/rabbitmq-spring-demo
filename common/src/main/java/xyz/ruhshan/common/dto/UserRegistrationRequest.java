@@ -1,4 +1,4 @@
-package xyz.ruhshan.gateway.dto;
+package xyz.ruhshan.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiResponse implements Serializable {
-    private String message;
+public class UserRegistrationRequest implements Serializable {
+    private String username;
+    private String email;
 }

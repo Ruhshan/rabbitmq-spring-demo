@@ -12,6 +12,7 @@
 
     <modules>
         <module>gateway</module>
+        <module>common</module>
     </modules>
 
 </project>

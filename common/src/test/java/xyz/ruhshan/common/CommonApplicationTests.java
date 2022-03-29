@@ -1,10 +1,10 @@
-package xyz.ruhshan.gateway;
+package xyz.ruhshan.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GatewayApplicationTests {
+class CommonApplicationTests {
 
     @Test
     void contextLoads() {

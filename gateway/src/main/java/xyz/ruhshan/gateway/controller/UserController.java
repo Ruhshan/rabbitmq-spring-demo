@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.ruhshan.gateway.dto.ApiResponse;
-import xyz.ruhshan.gateway.dto.UserRegistrationRequest;
+import xyz.ruhshan.common.dto.ApiResponse;
+import xyz.ruhshan.common.dto.UserRegistrationRequest;
 
 @RestController
 @RequestMapping(value = "/api",
