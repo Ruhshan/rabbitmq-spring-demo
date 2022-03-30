@@ -16,9 +16,19 @@ public class UserRegistrationListener {
     }
 
     @RabbitListener(queues = {"q.user-registration"})
-    public void onUserRegistration(UserRegistrationRequest event) {
+    public void onUserRegistration(UserRegistrationRequest event)  {
         log.info("User Registration Event Received: {}", event);
 
+        executeRegistration(event);
+
+
         rabbitTemplate.convertAndSend("x.post-registration",null, event);
+    }
+
+    private void executeRegistration(UserRegistrationRequest event) {
+        log.info("Executing User Registration Event: {}", event);
+
+        throw new RuntimeException("Registration Failed");
+
     }
 }
