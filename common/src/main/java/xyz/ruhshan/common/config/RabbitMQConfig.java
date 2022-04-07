@@ -7,6 +7,7 @@ import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -25,13 +26,18 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue createUserRegistrationQueue() {
-        return new Queue("q.user-registration");
+
+        return QueueBuilder.durable("q.user-registration")
+                .withArgument("x-dead-letter-exchange","x.registration-failure")
+                .withArgument("x-dead-letter-routing-key","fall-back")
+                .build();
     }
 
     @Bean
     public RetryOperationsInterceptor retryInterceptor(){
         return RetryInterceptorBuilder.stateless().maxAttempts(3)
                 .backOffOptions(2000, 2.0, 100000)
+                .recoverer(new RejectAndDontRequeueRecoverer())
                 .build();
     }
 
@@ -42,6 +48,7 @@ public class RabbitMQConfig {
         configurer.configure(factory, cachingConnectionFactory);
         factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
         factory.setAdviceChain(retryInterceptor());
+        factory.setDefaultRequeueRejected(false);
         return factory;
     }
 
@@ -56,6 +63,14 @@ public class RabbitMQConfig {
         );
     }
 
+    @Bean
+    public Declarables createDeadLetterSchema(){
+        return new Declarables(
+            new DirectExchange("x.registration-failure"),
+            new Queue("q.fall-back-registration"),
+            new Binding("q.fall-back-registration", Binding.DestinationType.QUEUE,"x.registration-failure", "fall-back", null)
+        );
+    }
 
     @Bean
     public Jackson2JsonMessageConverter converter() {
