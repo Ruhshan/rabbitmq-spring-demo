@@ -39,8 +39,7 @@ public class RabbitMQConfig {
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(SimpleRabbitListenerContainerFactoryConfigurer configurer) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        configurer.configure(factory, cachingConnectionFactory());
-        factory.setMessageConverter(converter());
+        configurer.configure(factory, cachingConnectionFactory);
         factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
         factory.setAdviceChain(retryInterceptor());
         return factory;

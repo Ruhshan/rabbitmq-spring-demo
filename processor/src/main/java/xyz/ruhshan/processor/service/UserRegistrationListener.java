@@ -22,7 +22,7 @@ public class UserRegistrationListener {
         executeRegistration(event);
 
 
-        rabbitTemplate.convertAndSend("x.post-registration",null, event);
+        rabbitTemplate.convertAndSend("x.post-registration","", event);
     }
 
     private void executeRegistration(UserRegistrationRequest event) {
